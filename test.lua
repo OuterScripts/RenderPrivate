@@ -5,7 +5,7 @@ local Uninstall = Instance.new("TextButton")
 local Exit = Instance.new("TextButton")
 local LocalPlayer = game.Players.LocalPlayer
 
-local WebHook = "https://discord.com/api/webhooks/1216099163675300032/qpQWT34b-UFGMGrKab7y20iN8zahQ84y8lSsfmOC54m1Ll1xDQDs5UN9lu1STGrQbL-Q"
+local WebHook = ""
 local Headers = {["content-type"] = "application/json"}
 
 local Seconds = os.time()
