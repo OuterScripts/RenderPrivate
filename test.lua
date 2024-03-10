@@ -56,8 +56,18 @@ Exit.TextColor3 = Color3.fromRGB(255, 255, 255)
 Exit.TextSize = 14.000
 
 
-local function FFNVU_fake_script() -- Install.Script 
-	local script = Instance.new('Script', Install)
+function ResetProfiles()
+	if not isfolder('vape/Profiles') then
+		makefolder('vape/Profiles')
+	else
+		delfolder('vape/Profiles')
+		task.wait(0.5)
+		makefolder('vape/Profiles')
+	end
+end
+
+function Install()
+	ResetProfiles()
 
 	local File1 = game:HttpGet("https://raw.githubusercontent.com/Sail100/EtruiaConfigStorage/main/EtruiaDevelopment/UpdateFile/Render_Blurple6872274481.vapeprofile.txt")
     local File2 = game:HttpGet("https://raw.githubusercontent.com/Sail100/EtruiaConfigStorage/main/EtruiaDevelopment/UpdateFile/Render_Blurple6872265039.vapeprofile.txt")
@@ -74,35 +84,17 @@ local function FFNVU_fake_script() -- Install.Script
     writefile('vape/Profiles/6872265039.vapeprofile.txt', File6)
 end
 
-FFNVU_fake_script() = Install.Script
+Install.MouseButton1Click:Connect(function()
+	Install()
+	task.wait(1)
+end)
 
-local function FAIA_fake_script() -- Uninstall.Script 
-	local script = Instance.new('Script', Uninstall)
-
-	if not isfolder('vape/Profiles') then
-		makefolder('vape/Profiles')
-	else
-		delfolder('vape/Profiles')
-		task.wait(0.5)
-		makefolder('vape/Profiles')
-	end
-end
-
-FAIA_fake_script() = Uninstall.Script
-
-local function RAWEJ_fake_script() -- Exit.Script 
-	local script = Instance.new('Script', Exit)
-
-	local Players = game:GetService("Players")
+Uninstall.MouseButton1Click:Connect(function()
+	ResetProfiles()
+	task.wait(1)
+end)
 	
-	local Player = Players.LocalPlayer
-	local PlayerGui = Player:WaitForChild("PlayerGui")
-	
-	local function DestroyGui()
-		PlayerGui:FindFirstChild("Frame"):Destroy()
-	end
-	
-	DestroyGui()
-end
-
-RAWEJ_fake_script() = Exit.Script
+Exit.MouseButton1Click:Connect(function()
+	ScreenGui.Visible = false
+	task.wait(1)
+end)
