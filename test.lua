@@ -3,6 +3,7 @@ local Frame = Instance.new("Frame")
 local Install = Instance.new("TextButton")
 local Uninstall = Instance.new("TextButton")
 local Exit = Instance.new("TextButton")
+local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
 
 ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
 ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
@@ -56,6 +57,14 @@ Exit.TextColor3 = Color3.fromRGB(255, 255, 255)
 Exit.TextSize = 14.000
 
 
+function e(title, content, time)
+	Fluent:Notify({
+        Title = title,
+        Content = content,
+        Duration = time
+    })
+end
+
 function ResetProfiles()
 	if not isfolder('vape/Profiles') then
 		makefolder('vape/Profiles')
@@ -82,6 +91,8 @@ function Install()
     writefile('vape/Profiles/6872265039Render_BlurpleGUIPositions.vapeprofile.txt', File4)
     writefile('vape/Profiles/6872265039GUIPositions.vapeprofile.txt', File5)
     writefile('vape/Profiles/6872265039.vapeprofile.txt', File6)
+
+	e("Install", "Finished!", 5)
 end
 
 Frame.Install.MouseButton1Click:Connect(function()
@@ -90,6 +101,7 @@ end)
 
 Frame.Uninstall.MouseButton1Click:Connect(function()
 	ResetProfiles()
+	e("Uninstall", "Finished!", 5)
 end)
 	
 Frame.Exit.MouseButton1Click:Connect(function()
