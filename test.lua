@@ -84,17 +84,14 @@ function Install()
     writefile('vape/Profiles/6872265039.vapeprofile.txt', File6)
 end
 
-Install.MouseButton1Click:Connect(function()
+Frame.Install.MouseButton1Click:Connect(function()
 	Install()
-	task.wait(1)
 end)
 
-Uninstall.MouseButton1Click:Connect(function()
+Frame.Uninstall.MouseButton1Click:Connect(function()
 	ResetProfiles()
-	task.wait(1)
 end)
 	
-Exit.MouseButton1Click:Connect(function()
+Frame.Exit.MouseButton1Click:Connect(function()
 	ScreenGui.Visible = false
-	task.wait(1)
 end)
