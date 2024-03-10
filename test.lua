@@ -93,5 +93,5 @@ Frame.Uninstall.MouseButton1Click:Connect(function()
 end)
 	
 Frame.Exit.MouseButton1Click:Connect(function()
-	ScreenGui.Visible = false
+	Frame.Visible = false
 end)
